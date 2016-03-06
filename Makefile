@@ -20,6 +20,6 @@ gettemp.o:gettemp.c gettime.h
 nodeopr.o:nodeopr.c nodeopr.h
 	cc -c -o nodeopr.o nodeopr.c $(IDIR) -I/usr/local/include/json-c
 c2java.o:c2java.c c2java.h
-	cc -c -o c2java.o c2java.c $(IDIR)  -I/usr/local/include/json-c
+	cc -c -o c2java.o c2java.c $(IDIR)  -I/usr/local/include/json-c -Wall
 clean:
 	rm *.o

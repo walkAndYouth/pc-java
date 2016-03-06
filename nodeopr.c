@@ -35,20 +35,23 @@ void  display_endpoint(char *buf)
     ENDPOINT s = endpoint_head.head;
 
     struct json_object * json_point = json_object_new_object();
-    json_object_object_add(json_point,"opr",json_object_new_string("word"));
+    json_object_object_add(json_point,"opr",json_object_new_string("start"));
     
     struct json_object * json_array = json_object_new_array();
 
-    while(s)
+//    while(s)
     {
         struct json_object *json_temp = json_object_new_object();
-        json_object_object_add(json_temp,"name",json_object_new_string(s->name));
+        json_object_object_add(json_temp,"name",json_object_new_string("zhang"));
+	json_object_object_add(json_temp,"id",json_object_new_int(5));
         json_object_array_add(json_array,json_temp);
-        json_object_put(json_temp);
-        s = s->next;
+        struct json_object *json_tempp = json_object_new_object();
+        json_object_object_add(json_tempp,"name",json_object_new_string("zhang"));
+	json_object_object_add(json_tempp,"id",json_object_new_int(5));
+        json_object_array_add(json_array,json_tempp);
+       // s = s->next;
     }
     json_object_object_add(json_point,"set",json_array);
-    buf = json_object_to_json_string(json_point);
-    printf("display:%s\n",buf);
+    strcat(buf,json_object_to_json_string(json_point));
     json_object_put(json_point);
 }

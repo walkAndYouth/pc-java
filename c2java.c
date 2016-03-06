@@ -6,8 +6,8 @@ static int c2java_socket;
 static void * recv_start(void*arg)
 {
     struct sockaddr_in addr;
-    char buffer[100];
-    char *buf  = (char*)malloc(1000);
+    char buffer[1000];
+     char  *  buf  = (char*)malloc(1000);
     if(!buf)
     {
         printf("malloc fialed!\n");
@@ -21,16 +21,20 @@ static void * recv_start(void*arg)
         struct json_object *json_opr;
         recvfrom(c2java_socket,&buffer,1000,0,(struct sockaddr*)(&addr),&addrlen);
         jsonobj = json_tokener_parse((const char*)&buffer);
-        json_object_object_get_ex(jsonobj,"opr",&json_opr);
-        char *opr = json_object_get_string(json_opr);
         if(is_error(jsonobj))
         {
             printf("json failed!\n");
         }
+        json_object_object_get_ex(jsonobj,"opr",&json_opr);
+        if(is_error(json_opr))
+        {
+            printf("json opr failed!\n");
+        }
+        char *opr = json_object_get_string(json_opr);
         if(!strcmp(opr,"start"))
         {
-		printf("json_string:%s\n",opr);
             display_endpoint(buf);
+	    printf("endpoint:%s\n",buf);
             sendto(c2java_socket,buf,strlen(buf),0,(struct sockaddr*)(&addr),sizeof(struct sockaddr));
         }
         else if(!strcmp(opr,"put"))
@@ -38,11 +42,7 @@ static void * recv_start(void*arg)
             
         }
         
-
         json_object_put(jsonobj);
-
-        display_endpoint(buf);
-        printf("name:%s\n",buf);
         *buf = '\0';
     }
 }

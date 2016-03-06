@@ -38,7 +38,7 @@ ENDPOINT get_node_by_num(int num);
 void del_node_by_name(char *name);
 void del_node_by_num(char *num);
 //
-void display_endpoint();
+void display_endpoint(char *buf);
 //
 //
 //
